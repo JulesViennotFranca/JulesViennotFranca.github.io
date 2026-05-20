@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jules Viennot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&familly=Space+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    /* ── Reset & base ── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --accent: #2a6496;
+      --accent2: #1a4a72;
+      --light-bg: #fff;
+      --card-bg: #ffffff;
+      --col1: #CB3535;
+      --col2: #3AB37F;
+      --col3: #7c3aed;
+      --text: #333;
+      --muted: #555;
+      --muted2: #777;
+      --border: #eee;
+      --radius: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Geist', 'Segoe UI', system-ui, sans-serif;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--light-bg);
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--col3);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    main a {
+      color: var(--col3);
+      text-decoration: none;
+    }
+
+    main a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      background: var(--light-bg);
+      border-bottom: 1px solid #000;
+      padding: 0 0.2em;
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-end;
+      gap: 0;
+      height: 36px;
+      font-family: 'Geist Mono', monospace;
+    }
+
+    nav a {
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      padding: 0 0.9rem;
+      border-left: 1px solid var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+    }
+
+    nav a:hover {
+      text-decoration: none;
+    }
+
+    nav a:nth-child(1):hover {
+      color: var(--col1);
+    }
+
+    nav a:nth-child(2):hover {
+      color: var(--col2);
+    }
+
+    nav a:nth-child(3):hover {
+      color: var(--col3);
+    }
+
+    /* ── Hero header ── */
+    header {
+      position: relative;
+      background-color: var(--light-bg);
+      background-image:
+        linear-gradient(to top, var(--text) 1px, transparent 1px),
+        linear-gradient(90deg, var(--text) 1px, transparent 1px);
+      background-size: 2rem 2rem;
+      color: var(--text);
+      padding: .5rem 0;
+      font-family: 'Geist Mono', monospace;
+      /* border-image: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00) 1; */
+    }
+
+    /* extends grid upward without affecting layout; 200rem is a multiple of 2rem so lines align */
+    header::before {
+      content: '';
+      position: absolute;
+      top: -2rem;
+      left: 0;
+      right: 0;
+      height: 2rem;
+      border-top: 1px solid var(--text);
+      border-bottom: 1px solid var(--text);
+      background-color: var(--light-bg);
+      background-image:
+        linear-gradient(to top, var(--text) 1px, transparent 1px),
+        linear-gradient(90deg, var(--text) 1px, transparent 1px);
+      background-size: 2rem 2rem;
+      z-index: -1;
+    }
+
+    .hero-inner {
+      margin: 0 0 0 2.5rem;
+      display: flex;
+      align-items: top;
+      gap: 2.5rem;
+      flex-wrap: nowrap;
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+      flex-shrink: 0;
+      margin: 0.5rem;
+    }
+
+    .hero-photo-wrap::before,
+    .hero-photo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-photo-wrap::before {
+      background: var(--col1);
+      translate: -0.5rem -0.5rem;
+      z-index: 0;
+    }
+
+    .hero-photo-wrap::after {
+      background: var(--col2);
+      translate: 0.5rem 0.5rem;
+      z-index: 0;
+    }
+
+    .hero-photo {
+      width: 12rem;
+      height: 16rem;
+      object-fit: cover;
+      border: none;
+      background: #eee;
+      display: block;
+      position: relative;
+      z-index: 1;
+      font-size: 0.75rem;
+      color: #999;
+      text-align: center;
+    }
+
+    .hero-text h1 {
+      font-size: 6rem;
+      font-weight: 700;
+      width: 48rem;
+      height: 6rem;
+      line-height: 1;
+      display: inline-flex;
+      justify-content: center;
+      padding: 0;
+      margin-top: 1.5rem;
+      background-color: var(--light-bg);
+      border-bottom: 1px solid var(--text);
+      border-left: 1px solid var(--text);
+    }
+
+    .hero-text .subtitle {
+      font-size: 1.6rem;
+      font-weight: 500;
+      width: 12rem;
+      height: 2rem;
+      margin-top: 2rem;
+      margin-left: 2rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--light-bg);
+      border-bottom: 1px solid var(--text);
+      border-left: 1px solid var(--text);
+    }
+
+    .hero-contact {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-contact a {
+      font-size: 1rem;
+      height: 2rem;
+      line-height: 1;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4em;
+      color: var(--text);
+      background-color: var(--light-bg);
+      border-bottom: 1px solid var(--text);
+      border-left: 1px solid var(--text);
+    }
+
+    .hero-contact a:nth-child(1) {
+      margin-left: 50rem;
+      width: 6rem;
+    }
+
+    .hero-contact a:nth-child(2) {
+      margin-left: 24rem;
+      width: 16rem;
+    }
+
+    .hero-contact a:hover {
+      color: var(--col3);
+    }
+
+    .hero-fun-wrap {
+      position: relative;
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: -.5rem;
+      margin-bottom: -.5rem;
+      margin-left: 9.5rem;
+    }
+
+    .hero-fun-wrap::before {
+      content: '';
+      position: absolute;
+      top: 1.5rem;
+      left: -1rem;
+      right: 0;
+      bottom: 0;
+      background: var(--col3);
+      border-bottom: 1px solid var(--text);
+      z-index: 0;
+    }
+
+    .hero-fun {
+      width: 9rem;
+      height: 18rem;
+      object-fit: cover;
+      border: none;
+      background: #eee;
+      border-bottom: 1px solid var(--text);
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Main layout ── */
+    main {
+      position: relative;
+      margin: 2.5rem 2rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    /* ── Background image ── adjust these three variables to reposition/resize */
+    #main-bg {
+      display: none;
+      /* ← remove this line to show the background image again */
+      --bg-top: 0;
+      /* vertical offset from top of main */
+      --bg-width: 80rem;
+      /* image width */
+      --bg-height: 80rem;
+      /* image height */
+
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: var(--bg-top);
+      width: var(--bg-width);
+      height: var(--bg-height);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #main-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.35;
+      /* ← adjust between 0 (invisible) and 1 (fully opaque) */
+    }
+
+    /* ── Cards / sections ── */
+    section {
+      background: transparent;
+      padding: 1rem 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    section h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: 'Geist Mono', monospace;
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+
+    /* ── About ── */
+    #about p {
+      color: var(--muted);
+    }
+
+    /* ── Publications ── */
+    .pub-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pub-list li {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pub-list li:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .pub-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .pub-authors {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .pub-venue {
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--muted2);
+    }
+
+    .pub-links {
+      margin-top: 0.2rem;
+      font-size: 0.85rem;
+    }
+
+    .pub-links a {
+      margin-right: 0.6rem;
+      background: var(--light-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: 0.8rem;
+    }
+
+    /* ── Academic cursus timeline ── */
+    .cursus-timeline {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--text);
+      padding: 0 1.5rem 0.15rem;
+    }
+
+    .tl-axis {
+      position: relative;
+      height: 1.4rem;
+    }
+
+    .tl-separator {
+      height: 0;
+      border-top: 1px solid var(--text);
+      margin: 0 -1.5rem;
+    }
+
+    .tl-axis-year {
+      position: absolute;
+      transform: translateX(-50%);
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      bottom: 2px;
+    }
+
+    .tl-track {
+      height: 1.65rem;
+      overflow: visible;
+    }
+
+    .tl-row {
+      position: relative;
+      height: 100%;
+      overflow: visible;
+      background-image:
+        repeating-linear-gradient(to bottom,
+          transparent 0px, transparent 4px,
+          var(--light-bg) 4px, var(--light-bg) 7px),
+        linear-gradient(to right, transparent calc(100% - 1px), var(--border) calc(100% - 1px)),
+        repeating-linear-gradient(90deg,
+          var(--border) 0, var(--border) 1px,
+          transparent 1px, transparent 14.285%);
+    }
+
+    .tl-item {
+      position: absolute;
+      top: 0.15rem;
+      background: var(--tl-color);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.4rem;
+      height: 1.5rem;
+      font-family: 'Geist Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: #fff;
+      cursor: default;
+      z-index: 1;
+    }
+
+    .tl-item:hover {
+      z-index: 10;
+    }
+
+    .tl-short {
+      white-space: nowrap;
+    }
+
+    .tl-detail {
+      display: none;
+    }
+
+    .tl-desc-panel {
+      overflow: hidden;
+      height: 0;
+      transition: height 0.35s ease;
+    }
+
+    .tl-desc-content {
+      padding: 0.6rem 0;
+      font-family: 'Geist', sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: transparent;
+      transform: translateY(0.6rem);
+      transition: color 0.35s ease, transform 0.35s ease;
+    }
+
+    .tl-item-ongoing {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* ── Eyes ── */
+    .eye {
+      /* ↓ change these two variables to resize */
+      --eye-size: .65rem;
+      --pupil-size: .25rem;
+
+      position: absolute;
+      z-index: 2;
+      width: var(--eye-size);
+      height: var(--eye-size);
+      border-radius: 50%;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    /* ↓ set the coordinates of each eye independently */
+    .eye-left {
+      top: 61%;
+      left: 40.5%;
+    }
+
+    .eye-right {
+      top: 60.5%;
+      left: 50%;
+    }
+
+    .pupil {
+      width: var(--pupil-size);
+      height: var(--pupil-size);
+      border-radius: 50%;
+      background: #000;
+      position: absolute;
+      /* centred by default before JS runs */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ─── Navigation ─── -->
+  <nav>
+    <a href="#about">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+      Research
+    </a>
+    <a href="#publications">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+      </svg>
+      Publications
+    </a>
+    <a href="#cursus">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+        <path d="M6 12v5c3 3 9 3 12 0v-5" />
+      </svg>
+      Cursus
+    </a>
+  </nav>
+
+  <div id="page-wrap">
+
+    <!-- ─── Hero ─── -->
+    <header>
+      <div class="hero-inner">
+
+        <div class="hero-photo-wrap">
+          <img class="hero-photo" src="photo.jpg" alt="Photo of Jules Viennot"
+            onerror="this.outerHTML='<div class=\'hero-photo\'>Photo</div>'" />
+        </div>
+
+        <div class="hero-text">
+          <h1>Jules Viennot</h1>
+          <!-- ← Edit your field & institution below -->
+          <p class="subtitle">PhD Student</p>
+          <div class="hero-contact">
+            <!-- ← Replace with your actual links/addresses -->
+            <a href="https://github.com/JulesViennotFranca" target="_blank">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+              </svg>
+              GitHub
+            </a>
+            <a href="mailto:jules.viennot@inria.fr">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              jules.viennot@inria.fr
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-fun-wrap">
+          <img class="hero-fun" src="fun.jpg" alt="" />
+          <div class="eye eye-left">
+            <div class="pupil"></div>
+          </div>
+          <div class="eye eye-right">
+            <div class="pupil"></div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ─── Main content ─── -->
+    <main>
+
+      <div id="main-bg"><img id="main-bg-img" src="" alt="" /></div>
+
+      <!-- About -->
+      <section id="about">
+        <h2>Research</h2>
+        <p>
+          I am a PhD student at <a href="https://www.inria.fr/en">Inria</a> supervised by
+          <a href="https://www.di.ens.fr/~lelarge/">Marc Lelarge</a> and <a
+            href="https://guillaume.baudart.eu/">Guillaume Baudart</a>.
+          I work with the <a href="https://www.irif.fr/equipes/picube/index">Picube</a> team at <a
+            href="https://www.irif.fr/">IRIF</a> and the <a href="https://www.di.ens.fr/argo/">Argo</a> team at Inria
+          Paris.
+          My research investigates the reasoning capabilities of Large Language Models. Concretely, my thesis focuses on
+          improving their ability to write proofs and programs in the proof assistant
+          <a href="https://rocq-prover.org/"><img src="rocq.png" alt="Rocq"
+              style="height:1.2em;vertical-align:-0.25em;margin-left:0.2em;margin-right:0.4em;">Rocq</a>.
+          Beyond my thesis, I am interested in lambda calculus and type theory, topics at the foundations of Rocq.
+        </p>
+      </section>
+
+      <!-- Publications -->
+      <section id="publications">
+        <h2>Publications</h2>
+        <ul class="pub-list">
+
+          <!-- ← Copy-paste the block below for each new publication -->
+          <li>
+            <div class="pub-title">Tacq -- Context Aware Tactic Recommendation for Rocq</div>
+            <div class="pub-authors">Jules Viennot, Guillaume Baudart, Emilio Jesús Gallego Arias, Marc Lelarge, Theo
+              Stoskopf</div>
+            <div class="pub-venue">JFLA, 2026</div>
+            <div class="pub-links">
+              <a href="https://hal.science/hal-05428141v1">HAL</a>
+            </div>
+          </li>
+
+          <li>
+            <div class="pub-title">MiniF2F in Rocq: Automatic Translation Between Proof Assistants -- A Case Study
+            </div>
+            <div class="pub-authors">Jules Viennot, Guillaume Baudart, Emilio Jesús Gallego Arias, Marc Lelarge</div>
+            <div class="pub-venue">MATH-AI, NeurIPS, 2025</div>
+            <div class="pub-links">
+              <a href="https://arxiv.org/pdf/2503.04763">PDF</a>
+              <a href="https://arxiv.org/abs/2503.04763">arXiv</a>
+            </div>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- Academic Cursus -->
+      <section id="cursus">
+        <h2>Academic Cursus</h2>
+        <div class="cursus-timeline">
+
+          <!-- X-axis: Jan 2020 = 0%, each year = 14.285% (7-year range to Jan 2027) -->
+          <div class="tl-axis">
+            <span class="tl-axis-year" style="left:0%">2020</span>
+            <span class="tl-axis-year" style="left:14.3%">2021</span>
+            <span class="tl-axis-year" style="left:28.6%">2022</span>
+            <span class="tl-axis-year" style="left:42.9%">2023</span>
+            <span class="tl-axis-year" style="left:57.1%">2024</span>
+            <span class="tl-axis-year" style="left:71.4%">2025</span>
+            <span class="tl-axis-year" style="left:85.7%">2026</span>
+            <span class="tl-axis-year" style="left:100%">2027</span>
+          </div>
+
+          <div class="tl-separator"></div>
+
+          <!-- Track 1: École Polytechnique — Aug 2020 (7/84) to Aug 2024 (55/84) -->
+          <div class="tl-track" style="--tl-color: var(--col1)">
+            <div class="tl-row">
+              <div class="tl-item" style="left:8.3%;width:57.2%">
+                <span class="tl-short">École Polytechnique</span>
+                <div class="tl-detail">
+                  Engineering school, following courses about computer science, mathematics, biology, and social
+                  sciences.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Track 2: MPRI — Sep 2023 (44/84) to Aug 2024 (55/84) -->
+          <div class="tl-track" style="--tl-color: var(--col2)">
+            <div class="tl-row">
+              <div class="tl-item" style="left:52.4%;width:13.1%">
+                <span class="tl-short">MPRI</span>
+                <div class="tl-detail">
+                  Master's Degree at Université Paris Cité, following courses about functional programming, proof
+                  assistants, abstract interpretation, proof of programs, probabilistic languages and real-time software
+                  verification.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Track 3: Research — Internship Apr (51/84) to Aug 2024 (55/84); PhD Dec 2024 (59/84) ongoing -->
+          <div class="tl-track" style="--tl-color: var(--col3)">
+            <div class="tl-row">
+              <div class="tl-item" style="left:60.7%;width:6.6%">
+                <span class="tl-short">Internship</span>
+                <div class="tl-detail">
+                  Internship at Cambium (Inria) supervised by François Pottier and Armaël Guéneau on the formalisation
+                  of
+                  Kaplan-Tarjan deques in Rocq.
+                </div>
+              </div>
+              <div class="tl-item tl-item-ongoing" style="left:70.2%">
+                <span class="tl-short">PhD</span>
+                <div class="tl-detail">
+                  Large Language Models applied to formal verification in Rocq.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tl-desc-panel">
+          <div class="tl-desc-content"></div>
+        </div>
+
+      </section>
+
+
+    </main>
+
+  </div><!-- #page-wrap -->
+
+  <script>
+    /* ── Page scaling ── */
+    const PAGE_REM = 98;
+    const wrap = document.getElementById('page-wrap');
+    const nav = document.querySelector('nav');
+    function fitPage() {
+      const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      const pageW = PAGE_REM * rem;
+      const scale = window.innerWidth / pageW;
+      const navVisualH = nav.offsetHeight * scale;
+      // scale the nav to match the page
+      nav.style.width = pageW + 'px';
+      nav.style.transformOrigin = 'top left';
+      nav.style.transform = `scale(${scale})`;
+      // offset page-wrap below the scaled nav
+      wrap.style.width = pageW + 'px';
+      wrap.style.marginTop = navVisualH + 'px';
+      wrap.style.transformOrigin = 'top left';
+      wrap.style.transform = `scale(${scale})`;
+      document.body.style.height = (navVisualH + Math.ceil(wrap.scrollHeight * scale)) + 'px';
+    }
+    fitPage();
+    window.addEventListener('resize', fitPage);
+
+    /* ── Main background slideshow ── */
+    const bgImages = ['rocq0.svg', 'rocq1.svg', 'rocq2.svg', 'rocq3.svg', 'rocq4.svg', 'rocq5.svg', 'rocq6.svg', 'rocq7.svg', 'rocq8.svg', 'rocq9.svg', 'rocq10.svg', 'rocq11.svg']; // ← add/remove filenames here
+    const bgImg = document.getElementById('main-bg-img');
+    let bgIdx = 0;
+    bgImg.src = bgImages[bgIdx];
+    function bgBurst() {
+      let steps = 0;
+      const t = setInterval(() => {
+        bgIdx = (bgIdx + 1) % bgImages.length;
+        bgImg.src = bgImages[bgIdx];
+        if (++steps >= bgImages.length) {
+          clearInterval(t);
+          setTimeout(bgBurst, 5000);
+        }
+      }, 50);
+    }
+    setTimeout(bgBurst, 5000);
+
+    /* ── Fun photo slideshow ── */
+    const funImages = ['fun1.png', 'fun2.png', 'fun3.png']; // ← add/remove filenames here
+    const funImg = document.querySelector('.hero-fun');
+    let funIdx = 0;
+    setInterval(() => {
+      funIdx = (funIdx + 1) % funImages.length;
+      funImg.src = funImages[funIdx];
+    }, 200);
+
+    /* ── Timeline description panel ── */
+    const tlPanel = document.querySelector('.tl-desc-panel');
+    const tlContent = document.querySelector('.tl-desc-content');
+
+    document.querySelectorAll('.tl-item').forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        const detail = item.querySelector('.tl-detail');
+        if (!detail) return;
+        // Snap to initial state without transitions
+        tlPanel.style.transition = 'none';
+        tlContent.style.transition = 'none';
+        tlContent.style.color = 'transparent';
+        tlContent.style.transform = 'translateY(0.6rem)';
+        tlContent.innerHTML = detail.innerHTML;
+
+        // Measure target height while panel is momentarily auto
+        tlPanel.style.height = 'auto';
+        const h = tlPanel.scrollHeight;
+        tlPanel.style.height = '0';
+
+        // Re-enable transitions, then animate in next frame
+        requestAnimationFrame(() => {
+          tlPanel.style.transition = '';
+          tlContent.style.transition = '';
+          requestAnimationFrame(() => {
+            tlPanel.style.height = h + 'px';
+            tlContent.style.color = 'var(--text)';
+            tlContent.style.transform = 'translateY(0)';
+            fitPage();
+          });
+        });
+      });
+
+      item.addEventListener('mouseleave', () => {
+        tlContent.style.color = 'transparent';
+        tlContent.style.transform = 'translateY(0.6rem)';
+        tlPanel.style.height = '0';
+        setTimeout(fitPage, 360);
+      });
+    });
+
+    document.addEventListener('mousemove', e => {
+      document.querySelectorAll('.eye').forEach(eye => {
+        const rect = eye.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+        const pupil = eye.querySelector('.pupil');
+        const eyeR = eye.offsetWidth / 2;      // layout px, same space as style.left/top
+        const pupilR = pupil.offsetWidth / 2;
+        const dist = eyeR - pupilR;          // pupil centre stays inside edge
+        pupil.style.transform = 'none';         // override the CSS centring
+        pupil.style.left = (eyeR + dist * Math.cos(angle) - pupilR) + 'px';
+        pupil.style.top = (eyeR + dist * Math.sin(angle) - pupilR) + 'px';
+      });
+    });
+  </script>
+</body>
+
+</html>
